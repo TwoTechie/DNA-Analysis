@@ -36,16 +36,26 @@ def fun1(request):
         shutil.copyfile('./media/input.txt', './media/fun1.txt')
         fs = FileSystemStorage()
         context['url'] = fs.url('./fun1.txt')
-        file_path = os.path.join('./media','fun1.txt') # full path to text.
-        data_file = open(file_path , 'rb')   #I used'rb' here since I got an 'gbk' decode error
-        data = data_file.read()
+        file_path = os.path.join('./media','fun1.txt')
         file1 = open(file_path,"r+")
+        Text = file1.readlines()
         print ("Output of Read function is ")
-        print (file1.read())
+        print(Text)
+        PatternCount(Text[0],Text[1],file1)
+        print(Text[0])
         print
-        print("data=", data)
+        print(Text[1])
+        print
     return render(request, 'fun1.html', context)
 
+def PatternCount(Textt, Pattern,file1):
+            count = 0
+            diff = len(Textt)-len(Pattern)+1
+            for i in range(0,diff):
+                if Textt[i:i+len(Pattern)] == Pattern:
+                    count += 1
+            cnum = str(count)
+            file1.write(cnum)
 
 def fun2(request):
     context = {}
